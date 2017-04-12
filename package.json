@@ -1,0 +1,14 @@
+{
+  "name": "css3slider",
+  "version": "2.0.0",
+  "description": "Create simple horizontal slider using only css3 transitions",
+  "main": "CSS3Slider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "imxquery": "1.1.0"
+  },
+  "author": "Axel Güldner <gueldner@infomax-it.de>",
+  "license": "ISC"
+}
