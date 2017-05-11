@@ -77,26 +77,30 @@ function CSS3Slider_Dom (CSS3Slider) {
   this.prepareSlideTarget = function () {
     var runtimeConfig = this.__CSS3Slider._Config.getRuntimeConfig();
     
-    // calculate the width of the slider row
-    var totalWidth = (runtimeConfig.slideChildrenCount / runtimeConfig.slideChildrenVisible) * 100;
-    // calculate the width of one single slider child node in percent
-    var singleElementWidth = this.__CSS3Slider._Config._getSingleElementWidthInPercent();
+    if(this.__CSS3Slider.isAnimationAllowed()){
+      
+      // calculate the width of the slider row
+      var totalWidth = (runtimeConfig.slideChildrenCount / runtimeConfig.slideChildrenVisible) * 100;
+      // calculate the width of one single slider child node in percent
+      var singleElementWidth = this.__CSS3Slider._Config._getSingleElementWidthInPercent();
 
-    var slideTargetNode = this.__CSS3Slider.getSlideTargetNode();
-    var slideNodeChildren = slideTargetNode.children;
-    
-    // set the width of every slider child node
-    for (var i = 0; i < slideNodeChildren.length; i++) {
-      slideNodeChildren[i].style.width = singleElementWidth + '%';
-    }
+      var slideTargetNode = this.__CSS3Slider.getSlideTargetNode();
+      var slideNodeChildren = slideTargetNode.children;
 
-    // set the width of the slider row node
-    slideTargetNode.style.width = totalWidth + '%';
-    this.activateAnimation();
+      // set the width of every slider child node
+      for (var i = 0; i < slideNodeChildren.length; i++) {
+        slideNodeChildren[i].style.width = singleElementWidth + '%';
+      }
 
-    // add clones
-    if (this.__CSS3Slider._Config._getBaseConfig().cloneMode) {
-      this.__Clone._addClones();
+      // set the width of the slider row node
+      slideTargetNode.style.width = totalWidth + '%';
+      this.activateAnimation();
+
+      // add clones
+      if (this.__CSS3Slider._Config._getBaseConfig().cloneMode) {
+        this.__Clone._addClones();
+      }
+      
     }
   };
   
@@ -106,7 +110,7 @@ function CSS3Slider_Dom (CSS3Slider) {
    * @returns {void}
    */
   this.activateAnimation = function () {
-    this.__CSS3Slider.getSlideTargetNode().style.transition = 'margin-left 0.5s ease';;
+    this.__CSS3Slider.getSlideTargetNode().style.transition = 'margin-left 0.5s ease';
   };
   
   /**
@@ -116,6 +120,7 @@ function CSS3Slider_Dom (CSS3Slider) {
    */
   this.deactivateAnimation = function () {
     this.__CSS3Slider.getSlideTargetNode().style.transition = null;
+    this.__CSS3Slider.getSlideTargetNode().style.margin = null;
   };
   
   

@@ -139,25 +139,36 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
     var slideChildrenVisible = 1;
     // calculate how many slider nodes are visible at once
     if (!this._getBaseConfig().forceSingleElement) {
-      slideChildrenVisible = Math.round(canvasWidth / this._getSingleElementWidthInPx());
+      slideChildrenVisible = Math.floor(canvasWidth / this._getSingleElementWidthInPx());
     }
-    
+
     // calculate how many clones are needed
     var slideClonesCount = 0;
     if (this._getBaseConfig().cloneMode) {
-      
-      slideClonesCount = this.__baseConfig.maxSteps + Math.floor((slideChildrenVisible - 1)/2);
-      if (slideClonesCount > slideChildrenVisible) { slideClonesCount = slideChildrenVisible; }
-      if (slideClonesCount > slideChildrenCount) { slideClonesCount = slideChildrenCount; }
+
+      slideClonesCount = this.__baseConfig.maxSteps + Math.floor((slideChildrenVisible - 1) / 2);
+      if (slideClonesCount > slideChildrenVisible) {
+        slideClonesCount = slideChildrenVisible;
+      }
+      if (slideClonesCount > slideChildrenCount) {
+        slideClonesCount = slideChildrenCount;
+      }
     }
-    
+
     // calculate the movement for one single sliding attempt
     this.__baseConfig.singleStep = this.__baseConfig.singleStep / slideChildrenVisible;
     
-    this.__CSS3Slider._allowAnimation();
+    // general global check if animation is allowed
+    if(slideChildrenCount <= slideChildrenVisible){
+      this.__CSS3Slider._forbidAnimation();
+    }else{
+      this.__CSS3Slider._allowAnimation();
+    }
+        
+    var slidePosition = (this.getRuntimeConfig() !== null) ? this.getRuntimeConfig().slidePosition : 0;
     
     return this._setRuntimeConfig({
-      slidePosition : 0,                            // the current first visible element in the row
+      slidePosition : slidePosition,                            // the current first visible element in the row
       slideValue : 0,                               // the offset of the row in percent
       slideChildrenCount : slideChildrenCount,      // how many non clone elements are in the slider
       slideChildrenVisible : slideChildrenVisible,  // how many elements are visible at once in the slider

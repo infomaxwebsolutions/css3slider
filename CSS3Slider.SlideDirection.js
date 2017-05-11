@@ -44,20 +44,26 @@ function CSS3Slider_SlideDirection (CSS3Slider) {
    * @returns {CSS3Slider_SlideDirection@pro;__CSS3Slider@pro;_SlidePosition@call;positionSlide|CSS3Slider_SlideDirection@pro;__CSS3Slider@pro;_Config@call;getRuntimeConfig|CSS3Slider_SlideDirection@call;directionSlide}
    */
   this.directionSlide = function (direction, testCalculation) {
-    var baseConfig = this.__CSS3Slider._Config._getBaseConfig();
-    var runtimeConfig = this.__CSS3Slider._Config.getRuntimeConfig();
-    
-    if (baseConfig.continiousSlide) {
-      if (baseConfig.cloneMode) {
-        // handle slide if cloneMode and continious slide are active
-        return this.__directionSlideContiniousClone(direction, baseConfig, runtimeConfig, testCalculation);
+    if (this.__CSS3Slider.isAnimationAllowed()) {
+      var baseConfig = this.__CSS3Slider._Config._getBaseConfig();
+      var runtimeConfig = this.__CSS3Slider._Config.getRuntimeConfig();
+
+      if (baseConfig.continiousSlide) {
+        if (baseConfig.cloneMode) {
+          // handle slide if cloneMode and continious slide are active
+          return this.__directionSlideContiniousClone(direction, baseConfig, runtimeConfig, testCalculation);
+        } else {
+          // handle slide if continious slide is active
+          return this.__directionSlideContinious(direction, baseConfig, runtimeConfig, testCalculation);
+        }
       } else {
-        // handle slide if continious slide is active
-        return this.__directionSlideContinious(direction, baseConfig, runtimeConfig, testCalculation);
+        // handle simple slide
+        return this.__directionSlide(direction, baseConfig, runtimeConfig, testCalculation);
+        
       }
     } else {
-      // handle simple slide
-      return this.__directionSlide(direction, baseConfig, runtimeConfig, testCalculation);
+      // simply return the runtime config without animation
+      return this.__CSS3Slider._Config.getRuntimeConfig();
     }
   };
   

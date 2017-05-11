@@ -135,7 +135,9 @@ function CSS3Slider (slideTargetNode, baseConfig) {
    * @returns {CSS3Slider@pro;_SlideDirection@call;directionSlide|object}
    */
   this.slideLeft = function () {
-    return this._SlideDirection.directionSlide('left');
+    if(this.isAnimationAllowed()){
+      return this._SlideDirection.directionSlide('left');
+    }
   };
   
   /**
@@ -144,7 +146,9 @@ function CSS3Slider (slideTargetNode, baseConfig) {
    * @returns {CSS3Slider@pro;_SlideDirection@call;directionSlide|object}
    */
   this.slideRight = function () {
-    return this._SlideDirection.directionSlide('right');
+    if(this.isAnimationAllowed()){
+      return this._SlideDirection.directionSlide('right');
+    }
   };
   
   /**
@@ -154,7 +158,9 @@ function CSS3Slider (slideTargetNode, baseConfig) {
    * @returns {CSS3Slider@pro;_SlidePosition@call;positionSlide|object}
    */
   this.slideTo = function (position) {
-    return this._SlidePosition.positionSlide(position);
+    if(this.isAnimationAllowed()){
+      return this._SlidePosition.positionSlide(position);
+    }
   };
   
   

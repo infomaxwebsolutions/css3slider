@@ -50,6 +50,7 @@ function CSS3Slider_SlidePosition (CSS3Slider) {
       
       // check if the position is inside the slider bounds
       position = this.__getActualPositionInsideBounds(position);
+
       // set the new slider position in percent
       var newSlideValue = (position * this.__CSS3Slider._Config._getBaseConfig().singleStep) * -1;
       
@@ -62,14 +63,17 @@ function CSS3Slider_SlidePosition (CSS3Slider) {
         slideClonesCount : this.__CSS3Slider._Config.getRuntimeConfig().slideClonesCount
       };
       
-      // check if call is only a testCalculation
+      // check if call is not only a testCalculation
       if (!testCalculation) {
         // if so - actualy slide the slide target
         this.__CSS3Slider.getSlideTargetNode().style.marginLeft = newSlideValue + '%';
         
         // allow animation again, after the css transition took place
         setTimeout(function () {
-          this.__CSS3Slider._allowAnimation();
+          var runtimeConfig = this.__CSS3Slider._Config.getRuntimeConfig();
+          if (runtimeConfig.slideChildrenCount > runtimeConfig.slideChildrenVisible){
+            this.__CSS3Slider._allowAnimation();
+          }
         }.bind(this), 500);
         
         return this.__CSS3Slider._Config._setRuntimeConfig(newRuntimeConfig);
@@ -99,9 +103,12 @@ function CSS3Slider_SlidePosition (CSS3Slider) {
 
     var minPosition = 0;
     var maxPosition = runtimeConfig.slideChildrenCount - runtimeConfig.slideChildrenVisible;
+    if(maxPosition <= 0){
+      maxPosition = 0;
+    }
 
     // if continious slide is active, add the clones count to min and max positions
-    if (baseConfig.continiousSlide) {
+    if (baseConfig.cloneMode) {
       minPosition -= runtimeConfig.slideClonesCount;
       maxPosition += runtimeConfig.slideClonesCount;
     }
