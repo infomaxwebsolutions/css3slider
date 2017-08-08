@@ -184,14 +184,16 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
    */
   this._getSingleElementWidthInPx = function () {
     var baseObject = this.__CSS3Slider.getSlideTargetNode().children[0];
-    var width = parseInt(baseObject.offsetWidth);
+    var computedStyle = window.getComputedStyle(baseObject);
 
-    var marginLeft = parseInt(window.getComputedStyle(baseObject).getPropertyValue('margin-left')) || 0;
-    var marginRight = parseInt(window.getComputedStyle(baseObject).getPropertyValue('margin-right')) || 0;
+    var width = parseInt(computedStyle.getPropertyValue('width'));
+
+    var marginLeft = parseInt(computedStyle.getPropertyValue('margin-left')) || 0;
+    var marginRight = parseInt(computedStyle.getPropertyValue('margin-right')) || 0;
     var margin = marginLeft + marginRight;
 
-    var paddingLeft = parseInt(window.getComputedStyle(baseObject).getPropertyValue('padding-left')) || 0;
-    var paddingRight = parseInt(window.getComputedStyle(baseObject).getPropertyValue('padding-right')) || 0;
+    var paddingLeft = parseInt(computedStyle.getPropertyValue('padding-left')) || 0;
+    var paddingRight = parseInt(computedStyle.getPropertyValue('padding-right')) || 0;
     var padding = paddingLeft + paddingRight;
 
     var totalWidth = width + margin + padding;
