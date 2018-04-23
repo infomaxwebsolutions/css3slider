@@ -50,6 +50,7 @@ function CSS3Slider_Dom_Clone (CSS3Slider) {
   this._addClones = function () {
     var runtimeConfig = this.__CSS3Slider._Config.getRuntimeConfig();
     var singleElementWidth = this.__CSS3Slider._Config._getSingleElementWidthInPercent();
+    var singleElementMargin = this.__CSS3Slider._Config._getSingleElementMarginInPx();
     var slideTargetNode = this.__CSS3Slider.getSlideTargetNode();
     
     // store all child nodes in an array cause nodeCollections are updated
@@ -60,8 +61,8 @@ function CSS3Slider_Dom_Clone (CSS3Slider) {
     
     // add so much clones as the config states are needed
     for (var i = 0; i < runtimeConfig.slideClonesCount; i++) {
-      this.__addSingleClone(slideTargetNode, originalChildNodeArray, i, 'prepander', singleElementWidth);
-      this.__addSingleClone(slideTargetNode, originalChildNodeArray, i, 'apander', singleElementWidth);
+      this.__addSingleClone(slideTargetNode, originalChildNodeArray, i, 'prepander', singleElementWidth, singleElementMargin);
+      this.__addSingleClone(slideTargetNode, originalChildNodeArray, i, 'apander', singleElementWidth, singleElementMargin);
     }
   };
   
@@ -75,7 +76,7 @@ function CSS3Slider_Dom_Clone (CSS3Slider) {
    * @param {Number} singleElementWidth
    * @returns {void}
    */
-  this.__addSingleClone = function (slideTargetNode, originalChildNodeArray, index, type, singleElementWidth) {
+  this.__addSingleClone = function (slideTargetNode, originalChildNodeArray, index, type, singleElementWidth, singleElementMargin) {
     
     var nodeForCloningIndex = null;
     
@@ -91,10 +92,15 @@ function CSS3Slider_Dom_Clone (CSS3Slider) {
     // create the clone
     var cloneNode = nodeForCloning.cloneNode(true);
     cloneNode.classList.add('-css3Slider-' + type);
-    cloneNode.style.width = singleElementWidth + '%';
     cloneNode.style.position = 'absolute';
     cloneNode.style.top = '0%';
     cloneNode.style.right = '100%';
+    
+    if(singleElementMargin){
+      cloneNode.style.width = 'calc(' + singleElementWidth + '% - '+ singleElementMargin +'px)';
+    }else{
+      cloneNode.style.width = singleElementWidth + '%';
+    }
     
     if (type === 'prepander') {
       // prepander will be positioned in front
