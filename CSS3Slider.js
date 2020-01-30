@@ -194,7 +194,7 @@ function CSS3Slider (slideTargetNode, baseConfig) {
     
     // calculate how many slider steps are available
     if (direction === 'right') {
-      slidesAvailable = runtimeConfig.slideChildrenCount - currentPosition - runtimeConfig.slideChildrenVisible;
+      slidesAvailable = runtimeConfig.slideChildrenCount - currentPosition - runtimeConfig.slideChildrenVisible + runtimeConfig.slideOverflowCount;
 
     } else if (direction === 'left') {
       slidesAvailable = currentPosition;

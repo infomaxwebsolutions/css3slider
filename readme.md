@@ -45,6 +45,7 @@ In order to customize your CSS3Slider, you pass an options object to it. Valid o
 * **forceSingleElement** - if you use the slider to slide image galleries, where every image is 100% viewport of the slider, you can manualy force the CSS3Slider to only display one slider element per time - default is *false*
 * **cloneMode** - with cloneMode true, CSS3Slider will add clones before the first child element and after the last child element, to create the illusion of an endless slider - default is *false*
 * **continiousSlide** - with continiousSlide true, CSS3Slider will bring you back to the start if you reach the last child element. If cloneMode is also true, CSS3Slider will create an endless slider - default is *false*
+* **overflowAllowed** - with overflowAllowed true, the CSS3Slider allow to slide to the last element even there are more than one element visible - default is *false*
 
 ### API
 
@@ -108,6 +109,7 @@ This returns the runtime config object. The runtime config object stores several
 * **slideValue** - the offset of the row in percent
 * **slideChildrenCount** - how many non clone elements are in the slider
 * **slideChildrenVisible** - how many elements are visible at once in the slider
+* **slideOverflowCount** - how many overflow steps are possible
 * **slideClonesCount** - how many clones are needed
 
 
