@@ -35,7 +35,8 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
     singleStep : 100,           // slide width in percent of the width of a single slide step
     forceSingleElement : false, // better ignore this - can be used to force the slider only to show one element
     cloneMode : false,          // set to true to add clones for endless slider visuals
-    continiousSlide : false     // set to true to create an endless slider
+    continiousSlide : false,    // set to true to create an endless slider
+    calcMethod : 'floor'
   };
   
   this.__CSS3Slider = null;
@@ -133,15 +134,9 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
     var cloneChildrenCount = slideTargetNode.querySelectorAll('.-css3Slider-prepander').length * 2;
     var slideChildrenCount = slideTargetNode.childElementCount - cloneChildrenCount;
     
-    // the width of the container that holds the row
-    var canvasWidth = slideTargetNode.parentNode.offsetWidth;
-    
-    var slideChildrenVisible = 1;
     // calculate how many slider nodes are visible at once
-    if (!this._getBaseConfig().forceSingleElement) {
-      slideChildrenVisible = Math.floor(canvasWidth / this._getSingleElementWidthInPx());
-    }
-
+    var slideChildrenVisible = this._getChildrenVisible();
+    
     // calculate how many clones are needed
     var slideClonesCount = 0;
     if (this._getBaseConfig().cloneMode) {
@@ -176,6 +171,37 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
     });
   };
   
+  this._getChildrenVisible = function(){
+    var slideTargetNode = this.__CSS3Slider.getSlideTargetNode();
+    
+    // the width of the container that holds the row
+    var computedStyle = window.getComputedStyle(slideTargetNode.parentNode);
+    var canvasWidth = parseInt(computedStyle.getPropertyValue('width'));
+    
+    var canvasWidth = slideTargetNode.parentNode.offsetWidth;
+    
+    var slideChildrenVisible = 1;
+    
+    // calculate how many slider nodes are visible at once
+    if (!this._getBaseConfig().forceSingleElement) {
+      
+      var calcMethod = this.__baseConfig.calcMethod;
+      var singleElementWidthInPx = this._getSingleElementWidthInPx();
+      
+      if(calcMethod == 'ceil'){
+        slideChildrenVisible = Math.ceil(canvasWidth / singleElementWidthInPx);
+        
+      }else if(calcMethod == 'round'){
+        slideChildrenVisible = Math.round(canvasWidth / singleElementWidthInPx);
+        
+      }else{
+        slideChildrenVisible = Math.floor(canvasWidth / singleElementWidthInPx);
+      }
+    }
+    
+    return slideChildrenVisible;
+  };
+  
   
   /**
    * calculate the original widht of a single slider element in pixel
@@ -188,15 +214,7 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
 
     var width = parseInt(computedStyle.getPropertyValue('width'));
 
-    var marginLeft = parseInt(computedStyle.getPropertyValue('margin-left')) || 0;
-    var marginRight = parseInt(computedStyle.getPropertyValue('margin-right')) || 0;
-    var margin = marginLeft + marginRight;
-
-    var paddingLeft = parseInt(computedStyle.getPropertyValue('padding-left')) || 0;
-    var paddingRight = parseInt(computedStyle.getPropertyValue('padding-right')) || 0;
-    var padding = paddingLeft + paddingRight;
-
-    var totalWidth = width + margin + padding;
+    var totalWidth = width + this._getSingleElementMarginInPx();
 
     return totalWidth;
   };
@@ -208,6 +226,17 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
    */
   this._getSingleElementWidthInPercent = function () {
     return 100 / this.getRuntimeConfig().slideChildrenCount;
+  };
+  
+  this._getSingleElementMarginInPx = function () {
+    var baseObject = this.__CSS3Slider.getSlideTargetNode().children[0];
+    var computedStyle = window.getComputedStyle(baseObject);
+    
+    var marginLeft = parseInt(computedStyle.getPropertyValue('margin-left')) || 0;
+    var marginRight = parseInt(computedStyle.getPropertyValue('margin-right')) || 0;
+    var margin = marginLeft + marginRight;
+    
+    return marginLeft + marginRight;
   };
   
   

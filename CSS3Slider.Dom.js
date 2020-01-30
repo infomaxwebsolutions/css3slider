@@ -83,13 +83,18 @@ function CSS3Slider_Dom (CSS3Slider) {
       var totalWidth = (runtimeConfig.slideChildrenCount / runtimeConfig.slideChildrenVisible) * 100;
       // calculate the width of one single slider child node in percent
       var singleElementWidth = this.__CSS3Slider._Config._getSingleElementWidthInPercent();
+      var singleElementMargin = this.__CSS3Slider._Config._getSingleElementMarginInPx();
 
       var slideTargetNode = this.__CSS3Slider.getSlideTargetNode();
       var slideNodeChildren = slideTargetNode.children;
 
       // set the width of every slider child node
       for (var i = 0; i < slideNodeChildren.length; i++) {
-        slideNodeChildren[i].style.width = singleElementWidth + '%';
+        if(singleElementMargin){
+          slideNodeChildren[i].style.width = 'calc(' + singleElementWidth + '% - '+ singleElementMargin +'px)';
+        }else{
+          slideNodeChildren[i].style.width = singleElementWidth + '%';
+        }
       }
 
       // set the width of the slider row node
