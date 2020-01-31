@@ -36,6 +36,7 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
     forceSingleElement : false, // better ignore this - can be used to force the slider only to show one element
     cloneMode : false,          // set to true to add clones for endless slider visuals
     continiousSlide : false,    // set to true to create an endless slider
+    overflowAllowed: false,     // set to true to allow to slide the last element to the first visible position.
     calcMethod : 'floor'
   };
   
@@ -133,10 +134,11 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
     // look up how many childnodes without clones are present
     var cloneChildrenCount = slideTargetNode.querySelectorAll('.-css3Slider-prepander').length * 2;
     var slideChildrenCount = slideTargetNode.childElementCount - cloneChildrenCount;
-    
+
     // calculate how many slider nodes are visible at once
     var slideChildrenVisible = this._getChildrenVisible();
-    
+    var slideOverflowCount = this._getBaseConfig().overflowAllowed ? slideChildrenVisible - 1 : 0;
+
     // calculate how many clones are needed
     var slideClonesCount = 0;
     if (this._getBaseConfig().cloneMode) {
@@ -163,10 +165,11 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
     var slidePosition = (this.getRuntimeConfig() !== null) ? this.getRuntimeConfig().slidePosition : 0;
     
     return this._setRuntimeConfig({
-      slidePosition : slidePosition,                            // the current first visible element in the row
+      slidePosition : slidePosition,                // the current first visible element in the row
       slideValue : 0,                               // the offset of the row in percent
       slideChildrenCount : slideChildrenCount,      // how many non clone elements are in the slider
       slideChildrenVisible : slideChildrenVisible,  // how many elements are visible at once in the slider
+      slideOverflowCount : slideOverflowCount,      // how many overflow steps are possible
       slideClonesCount : slideClonesCount           // how many clones are needed
     });
   };

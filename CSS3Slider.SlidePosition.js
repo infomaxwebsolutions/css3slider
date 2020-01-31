@@ -60,6 +60,7 @@ function CSS3Slider_SlidePosition (CSS3Slider) {
         slideValue: newSlideValue,
         slideChildrenCount: this.__CSS3Slider._Config.getRuntimeConfig().slideChildrenCount,
         slideChildrenVisible: this.__CSS3Slider._Config.getRuntimeConfig().slideChildrenVisible,
+        slideOverflowCount : this.__CSS3Slider._Config.getRuntimeConfig().slideOverflowCount,
         slideClonesCount : this.__CSS3Slider._Config.getRuntimeConfig().slideClonesCount
       };
       
@@ -102,7 +103,7 @@ function CSS3Slider_SlidePosition (CSS3Slider) {
     var runtimeConfig = this.__CSS3Slider._Config.getRuntimeConfig();
 
     var minPosition = 0;
-    var maxPosition = runtimeConfig.slideChildrenCount - runtimeConfig.slideChildrenVisible;
+    var maxPosition = runtimeConfig.slideChildrenCount - runtimeConfig.slideChildrenVisible + runtimeConfig.slideOverflowCount;
     if(maxPosition <= 0){
       maxPosition = 0;
     }
