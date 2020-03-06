@@ -91,7 +91,7 @@ function CSS3Slider_Dom (CSS3Slider) {
       // set the width of every slider child node
       for (var i = 0; i < slideNodeChildren.length; i++) {
         if(singleElementMargin){
-          slideNodeChildren[i].style.width = 'calc(' + singleElementWidth + '% - '+ singleElementMargin +'px)';
+          slideNodeChildren[i].style.width = 'calc(' + singleElementWidth + '% - ' + singleElementMargin + 'px - 0.01%)';
         }else{
           slideNodeChildren[i].style.width = singleElementWidth + '%';
         }
