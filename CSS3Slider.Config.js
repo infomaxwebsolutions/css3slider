@@ -181,8 +181,6 @@ function CSS3Slider_Config (CSS3Slider, baseConfig) {
     var computedStyle = window.getComputedStyle(slideTargetNode.parentNode);
     var canvasWidth = parseInt(computedStyle.getPropertyValue('width'));
     
-    var canvasWidth = slideTargetNode.parentNode.offsetWidth;
-    
     var slideChildrenVisible = 1;
     
     // calculate how many slider nodes are visible at once
