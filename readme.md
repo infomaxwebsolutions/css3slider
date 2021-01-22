@@ -20,16 +20,6 @@ First you need to require the CSS3Slider:
 var CSS3Slider = require('css3slider');
 ```
 
-If you dont work the commonjs way and prefer to do it the old fashined way with single script tags, make sure to include all files in the module
-```html
-<script type="text/javascript" src="node_modules/css3slider/CSS3Slider.SlidePosition.js"></script>
-<script type="text/javascript" src="node_modules/css3slider/CSS3Slider.SlideDirection.js"></script>
-<script type="text/javascript" src="node_modules/css3slider/CSS3Slider.Dom.Clones.js"></script>
-<script type="text/javascript" src="node_modules/css3slider/CSS3Slider.Dom.js"></script>
-<script type="text/javascript" src="node_modules/css3slider/CSS3Slider.Config.js"></script>
-<script type="text/javascript" src="node_modules/css3slider/CSS3Slider.js"></script>
-```
-
 In order to use the CSS3Slider you will need to create a new CSS3Slider Object in your script:
 ```javascript
 var mySliderObject = new CSS3Slider(htmlNode, configObject);
