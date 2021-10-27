@@ -162,7 +162,7 @@ function CSS3Slider_Config(CSS3Slider, baseConfig) {
     var slideTargetNode = this.__CSS3Slider.getSlideTargetNode();
 
     // the width of the container that holds the row
-    var canvasWidth = slideTargetNode.parentNode.offsetWidth;
+    var canvasWidth = slideTargetNode.parentNode.getBoundingClientRect().width;
 
     var slideChildrenVisible = 1;
 
@@ -196,7 +196,7 @@ function CSS3Slider_Config(CSS3Slider, baseConfig) {
     var baseObject = this.__CSS3Slider.getSlideTargetNode().children[0];
     var computedStyle = window.getComputedStyle(baseObject);
 
-    var width = parseInt(computedStyle.getPropertyValue('width'));
+    var width = parseFloat(computedStyle.getPropertyValue('width'));
 
     var totalWidth = width + this._getSingleElementMarginInPx();
 
