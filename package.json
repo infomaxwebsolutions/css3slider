@@ -1,6 +1,6 @@
 {
   "name": "css3slider",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Create simple horizontal slider using only css3 transitions",
   "main": "CSS3Slider.js",
   "scripts": {
