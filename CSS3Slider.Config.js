@@ -183,6 +183,8 @@ function CSS3Slider_Config(CSS3Slider, baseConfig) {
       }
     }
 
+    if(slideChildrenVisible < 1) slideChildrenVisible = 1;
+
     return slideChildrenVisible;
   };
 
